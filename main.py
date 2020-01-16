@@ -31,20 +31,30 @@ def get_messages_total():
 def get_messages_and_count(messages, messages_amount_per_week, messages_amount_total):
     time_current = time.time()
     time_week_ago = time_current-604800
+<<<<<<< HEAD
     #for i in range(messages_amount_total//200):
     for i in range(5):
         items = vk.messages.getHistory(peer_id=peer_id, count=200, offset=i*200)['items']
         for k in range(200):
+=======
+    for i in range(messages_amount_total//200):
+        items = vk.messages.getHistory(peer_id=peer_id, count=200, offset=i*200)['items']
+        for k in range(200):
+            print(items[k]['text'])
+>>>>>>> 209d7aff452aaf3f366e270696aa96389021a99b
             messages[0] += items[k]['text'] + ' '
         messages_amount_per_week[0] += k
         if items[k]['date'] <= time_week_ago:
             break
     print(messages[0], '\n', messages_amount_per_week[0])
+<<<<<<< HEAD
 
 def lemmatize(messages):
     m = Mystem()
     lemmas = m.lemmatize(messages)
     return ''.join(lemmas)
+=======
+>>>>>>> 209d7aff452aaf3f366e270696aa96389021a99b
 
 def message_format_and_split(messages):
     s = messages
@@ -63,11 +73,17 @@ def main():
     messages = ['']
     get_messages_and_count(messages, messages_amount_per_week, messages_amount_total)
     messages = messages[0]; messages_amount_per_week = messages_amount_per_week[0]
+<<<<<<< HEAD
     print('сообщений в конфе за 7 дней:', messages_amount_per_week)
     #vk.messages.send(peer_id=peer_id, message=f'Сообщений в конфе за 7 дней: {messages_amount_per_week}', random_id = random.random())
     messages = lemmatize(messages)
     word_list = set(message_format_and_split(messages))
     print(word_list)
+=======
+    #print('сообщения:', messages)
+    print('сообщений в конфе за 7 дней:', messages_amount_per_week)
+    vk.messages.send(peer_id=peer_id, message=f'Сообщений в конфе за 7 дней: {messages_amount_per_week}', random_id = random.random())
+>>>>>>> 209d7aff452aaf3f366e270696aa96389021a99b
 
 if __name__ == "__main__":
     main()
