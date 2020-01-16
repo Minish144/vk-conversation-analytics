@@ -13,19 +13,31 @@ import random
 with open("vk_data.json", "r") as vk_data_json_file:
         vk_data = json.load(vk_data_json_file)
 
-class vk_class:
-    login = vk_data["login"]
-    password = vk_data["password"]
-    access_token = vk_data["access_token"]
-    owner_id = vk_data["owner_id"]
-    chat_id = vk_data["chat_id"]
-    session = VkApi(login=login,
-                    password=password,
-                    token=access_token)
+login = vk_data["login"]
+password = vk_data["password"]
+access_token = vk_data["access_token"]
+owner_id = vk_data["owner_id"]
+chat_id = vk_data["chat_id"]
+peer_id = 2000000000 + chat_id
+session = VkApi(login=login,
+                password=password,
+                token=access_token)
+vk = session.get_api()
+
+def get_messages_total():
+    return vk.messages.getHistory(peer_id=peer_id, count=0)['count']
+
+def get_messages():
+    for i in range(get_messages_total()//200):
+        items = vk.messages.getHistory(peer_id=peer_id, count=200, offset=i*200)['items']
+        for k in range(200):
+            print(items[k]['text'])
+
+
 
 def main():
-    vk = vk_class.session.get_api()
-    vk.messages.send(chat_id = vk_class.chat_id, message='test', random_id = random.random())
+    print('сообщений всего:', get_messages_total())
+    get_messages()
 
 if __name__ == "__main__":
     main()
