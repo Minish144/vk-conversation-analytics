@@ -32,7 +32,7 @@ def get_messages_and_count(messages, messages_amount_per_week, messages_amount_t
     time_current = time.time()
     time_week_ago = time_current-604800
     #for i in range(messages_amount_total//200):
-    for i in range(5):
+    for i in range(15):
         items = vk.messages.getHistory(peer_id=peer_id, count=200, offset=i*200)['items']
         for k in range(200):
             messages[0] += items[k]['text'] + ' '
@@ -57,6 +57,18 @@ def remove_empty_element(word_list):
         if x == '':
             word_list.remove('')
 
+def most_freq_word_in_a_week(word_list):
+    word_freq_dict = []
+    count = 0
+    for primary_word in set(word_list):
+        count = 0
+        for secondary_word in word_list:
+            if primary_word == secondary_word:
+                count+=1
+        word_freq_dict.append({"word":primary_word,
+                               "amount":count})
+    return word_freq_dict
+
 def main():
     messages_amount_total = get_messages_total()
     messages_amount_per_week = [0]
@@ -66,8 +78,11 @@ def main():
     print('сообщений в конфе за 7 дней:', messages_amount_per_week)
     #vk.messages.send(peer_id=peer_id, message=f'Сообщений в конфе за 7 дней: {messages_amount_per_week}', random_id = random.random())
     messages = lemmatize(messages)
-    word_list = set(message_format_and_split(messages))
-    print(word_list)
+    word_list = message_format_and_split(messages)
+    word_freq_dict = most_freq_word_in_a_week(word_list)
+    word_freq_dict = list(filter(lambda x : len(x["word"]) > 5, word_freq_dict))
+    word_freq_dict = sorted(word_freq_dict, key=lambda k: k['amount']) 
+    print(word_freq_dict)
 
 if __name__ == "__main__":
     main()
