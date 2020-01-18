@@ -76,20 +76,42 @@ def most_freq_word_in_a_week(word_list):
                                "amount":count})
     return word_freq_dict
 
+def get_last_message():
+    return vk.messages.getHistory(peer_id = peer_id, count = 5)['items'][0]['text']
+
 def main():
-    messages_amount_total = get_messages_total()
-    messages_amount_per_week = [0]
-    messages = ['']
-    get_messages_and_count(messages, messages_amount_per_week, messages_amount_total)
-    messages = messages[0]; messages_amount_per_week = messages_amount_per_week[0]
-    #messages = lemmatize(messages)
-    word_list = message_format_and_split(messages)
-    word_freq_dict = most_freq_word_in_a_week(word_list)
-    word_freq_dict = list(filter(lambda x : len(x["word"]) > 3, word_freq_dict))
-    word_freq_dict = sorted(word_freq_dict, key=lambda k: k['amount'], reverse=True) 
-    vk.messages.send(peer_id=peer_id, random_id = random.random(), message=f'Сообщений в конфе всего: {messages_amount_total}\nСообщений в конфе за 7 дней: {messages_amount_per_week}\n-----------------------------------------\nПять самых популярных слов за 7 дней\n{word_freq_dict[0]["word"]} - {word_freq_dict[0]["amount"]} раз \n{word_freq_dict[1]["word"]} - {word_freq_dict[1]["amount"]} раз \n{word_freq_dict[2]["word"]} - {word_freq_dict[2]["amount"]} раз \n{word_freq_dict[3]["word"]} - {word_freq_dict[3]["amount"]} раз \n{word_freq_dict[4]["word"]} - {word_freq_dict[4]["amount"]} раз')
-    print(f'Сообщений в конфе всего - {messages_amount_total}\nСообщений в конфе за 7 дней - {messages_amount_per_week}\n-----------------------------------------\nПять самых популярных слов за 7 дней:\n{word_freq_dict[0]["word"]} - {word_freq_dict[0]["amount"]} раз \n{word_freq_dict[1]["word"]} - {word_freq_dict[1]["amount"]} раз \n{word_freq_dict[2]["word"]} - {word_freq_dict[2]["amount"]} раз \n{word_freq_dict[3]["word"]} - {word_freq_dict[3]["amount"]} раз \n{word_freq_dict[4]["word"]} - {word_freq_dict[4]["amount"]} раз')
-    #print(word_freq_dict[:20])
+    while (1):
+        if get_last_message() == 'колб стата':
+            try:
+                print('готовлю стату')
+                vk.messages.send(peer_id=peer_id, random_id = random.random(), message='готовлю стату')
+                messages_amount_total = get_messages_total()
+                messages_amount_per_week = [0]
+                messages = ['']
+                get_messages_and_count(messages, messages_amount_per_week, messages_amount_total)
+                messages = messages[0]; messages_amount_per_week = messages_amount_per_week[0]
+                #messages = lemmatize(messages)
+                word_list = message_format_and_split(messages)
+                word_freq_dict = most_freq_word_in_a_week(word_list)
+                word_freq_dict = list(filter(lambda x : len(x["word"]) > 3, word_freq_dict))
+                word_freq_dict = sorted(word_freq_dict, key=lambda k: k['amount'], reverse=True) 
+                vk.messages.send(peer_id=peer_id, random_id = random.random(), message=f'Сообщений в конфе всего: {messages_amount_total}\nСообщений в конфе за 7 дней: {messages_amount_per_week}\n-----------------------------------------\nПять самых популярных слов за 7 дней\n{word_freq_dict[0]["word"]} - {word_freq_dict[0]["amount"]} раз \n{word_freq_dict[1]["word"]} - {word_freq_dict[1]["amount"]} раз \n{word_freq_dict[2]["word"]} - {word_freq_dict[2]["amount"]} раз \n{word_freq_dict[3]["word"]} - {word_freq_dict[3]["amount"]} раз \n{word_freq_dict[4]["word"]} - {word_freq_dict[4]["amount"]} раз')
+                print(f'Сообщений в конфе всего - {messages_amount_total}\nСообщений в конфе за 7 дней - {messages_amount_per_week}\n-----------------------------------------\nПять самых популярных слов за 7 дней:\n{word_freq_dict[0]["word"]} - {word_freq_dict[0]["amount"]} раз \n{word_freq_dict[1]["word"]} - {word_freq_dict[1]["amount"]} раз \n{word_freq_dict[2]["word"]} - {word_freq_dict[2]["amount"]} раз \n{word_freq_dict[3]["word"]} - {word_freq_dict[3]["amount"]} раз \n{word_freq_dict[4]["word"]} - {word_freq_dict[4]["amount"]} раз')
+                #print(word_freq_dict[:20])
+            except:
+                try:
+                    vk.messages.send(peer_id=peer_id, random_id = random.random(), message='привет я сдох')
+                except:
+                    continue
+        if get_last_message().find('колб соси') != -1:
+            try:
+                vk.messages.send(peer_id=peer_id, random_id = random.random(), message='сам соси')
+            except:
+                try:
+                    vk.messages.send(peer_id=peer_id, random_id = random.random(), message='привет я сдох')
+                except:
+                    continue
+
 if __name__ == "__main__":
     main()
 
