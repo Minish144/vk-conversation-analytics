@@ -98,20 +98,23 @@ def stats_per_week():
         try:
             vk.messages.send(peer_id=peer_id, random_id = random.random(), message='привет бот сдох')
         except:
-            pass
+            print(Exception)
+
+def kolb_cocu():
+    try:
+        vk.messages.send(peer_id=peer_id, random_id = random.random(), message='сам соси')
+    except:
+        try:
+            vk.messages.send(peer_id=peer_id, random_id = random.random(), message='привет бот сдох')
+        except:
+            print(Exception)
 
 def main():
     while (1):
         if get_last_message() == 'колб стата':
             stats_per_week()
         if get_last_message().find('колб соси') != -1:
-            try:
-                vk.messages.send(peer_id=peer_id, random_id = random.random(), message='сам соси')
-            except:
-                try:
-                    vk.messages.send(peer_id=peer_id, random_id = random.random(), message='привет бот сдох')
-                except:
-                    continue
+            kolb_cocu()
 
 if __name__ == "__main__":
     main()
