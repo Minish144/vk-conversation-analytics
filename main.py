@@ -28,7 +28,7 @@ vk = session.get_api()                      #
 def get_messages_total():
     return vk.messages.getHistory(peer_id=peer_id, count=0)['count']
 
-def get_messages_and_count(messages, messages_amount_per_week, messages_amount_total):
+def get_messages_per_week_and_count(messages, messages_amount_per_week, messages_amount_total):
     time_current = time.time()
     time_week_ago = time_current-604800
     #time_day_ago = time_current-86400
@@ -86,7 +86,7 @@ def stats_per_week():
         messages_amount_total = get_messages_total()
         messages_amount_per_week = [0]
         messages = ['']
-        get_messages_and_count(messages, messages_amount_per_week, messages_amount_total)
+        get_messages_per_week_and_count(messages, messages_amount_per_week, messages_amount_total)
         messages = messages[0]; messages_amount_per_week = messages_amount_per_week[0]
         word_list = message_format_and_split(messages)
         word_freq_dict = most_freq_word_in_a_week(word_list)
@@ -99,6 +99,9 @@ def stats_per_week():
             vk.messages.send(peer_id=peer_id, random_id = random.random(), message='привет бот сдох')
         except:
             print(Exception)
+
+def stats_per_day():
+    pass
 
 def kolb_cocu():
     try:
