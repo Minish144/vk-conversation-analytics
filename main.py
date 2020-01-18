@@ -95,21 +95,21 @@ def stats_per_week():
         vk.messages.send(peer_id=peer_id, random_id = random.random(), message=f'Сообщений в конфе всего: {messages_amount_total}\nСообщений в конфе за 7 дней: {messages_amount_per_week}\n-----------------------------------------\nПять самых популярных слов за 7 дней\n{word_freq_dict[0]["word"]} - {word_freq_dict[0]["amount"]} раз \n{word_freq_dict[1]["word"]} - {word_freq_dict[1]["amount"]} раз \n{word_freq_dict[2]["word"]} - {word_freq_dict[2]["amount"]} раз \n{word_freq_dict[3]["word"]} - {word_freq_dict[3]["amount"]} раз \n{word_freq_dict[4]["word"]} - {word_freq_dict[4]["amount"]} раз')
         print(f'Сообщений в конфе всего - {messages_amount_total}\nСообщений в конфе за 7 дней - {messages_amount_per_week}\n-----------------------------------------\nПять самых популярных слов за 7 дней:\n{word_freq_dict[0]["word"]} - {word_freq_dict[0]["amount"]} раз \n{word_freq_dict[1]["word"]} - {word_freq_dict[1]["amount"]} раз \n{word_freq_dict[2]["word"]} - {word_freq_dict[2]["amount"]} раз \n{word_freq_dict[3]["word"]} - {word_freq_dict[3]["amount"]} раз \n{word_freq_dict[4]["word"]} - {word_freq_dict[4]["amount"]} раз') 
     except:
-    try:
-        vk.messages.send(peer_id=peer_id, random_id = random.random(), message='привет я сдох')
-    except:
-        continue
+        try:
+            vk.messages.send(peer_id=peer_id, random_id = random.random(), message='привет бот сдох')
+        except:
+            pass
 
 def main():
     while (1):
         if get_last_message() == 'колб стата':
-
+            stats_per_week()
         if get_last_message().find('колб соси') != -1:
             try:
                 vk.messages.send(peer_id=peer_id, random_id = random.random(), message='сам соси')
             except:
                 try:
-                    vk.messages.send(peer_id=peer_id, random_id = random.random(), message='привет я сдох')
+                    vk.messages.send(peer_id=peer_id, random_id = random.random(), message='привет бот сдох')
                 except:
                     continue
 
