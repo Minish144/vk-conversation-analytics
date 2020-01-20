@@ -124,7 +124,7 @@ def stats_per_day():
 
 def main():
     while (1):
-        last_message = get_last_message()
+        last_message = get_last_message().lower()
         if last_message == 'статистика неделя':
             stats_per_week()
         elif last_message == 'статистика сегодня':
